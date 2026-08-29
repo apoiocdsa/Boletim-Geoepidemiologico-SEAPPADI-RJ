@@ -12,7 +12,7 @@ const colorScale = [
 function initMap() {
     map = L.map('map', {center:[-22.0,-42.5], zoom:7});
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution:'© OpenStreetMap | SEAPADI-RJ', maxZoom:18
+        attribution:'© OpenStreetMap | SEAPPADI-RJ', maxZoom:18
     }).addTo(map);
 }
 

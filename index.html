@@ -15,6 +15,11 @@
     <div class="container">
         <div class="filters">
             <div class="filter-group">
+                <label for="searchMunicipio">Buscar Município:</label>
+                <input type="text" id="searchMunicipio" placeholder="Digite o nome..." onkeyup="if(event.key==='Enter')searchMunicipio()">
+            </div>
+            <button id="btnSearch" onclick="searchMunicipio()">Buscar</button>
+            <div class="filter-group">
                 <label for="filterAgravo">Agravo:</label>
                 <select id="filterAgravo"><option value="todos">Todos</option></select>
             </div>

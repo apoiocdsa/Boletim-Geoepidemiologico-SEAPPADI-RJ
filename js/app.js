@@ -10,7 +10,7 @@ const colorScale = [
 ];
 
 function initMap() {
-    map = L.map('map', {center:[-22.0,-42.5], zoom:7});
+    map = L.map('map', {center:[-22.0,-42.5], zoom:7, zoomControl:true});
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution:'© OpenStreetMap | SEAPPADI-RJ', maxZoom:18
     }).addTo(map);
@@ -46,21 +46,25 @@ function populateFilters() {
     agravos.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; selAgravo.appendChild(o); });
     const selAno = document.getElementById('filterAno');
     anos.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; selAno.appendChild(o); });
+    const selMun = document.getElementById('filterMunicipio');
+    const municipios = [...new Set(csvData.map(r => r.municipio))].sort();
+    municipios.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; selMun.appendChild(o); });
 }
 
-function renderMap(aggregated = {}) {
+function renderMap(aggregated = {}, selectedMunicipio = null) {
     if (geojsonLayer) map.removeLayer(geojsonLayer);
     geojsonLayer = L.geoJSON(geojsonData, {
         style: function(feature) {
             const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
+            const nome = feature.properties.NM_MUN || feature.properties.nome || feature.properties.name || '';
             const count = aggregated[cod] || 0;
+            const isSelected = selectedMunicipio && nome === selectedMunicipio;
             return {
                 fillColor: getColor(count),
-                weight: 2,
+                weight: isSelected ? 4 : 2,
                 opacity: 1,
-                color: '#333',
-                dashArray: '',
-                fillOpacity: count > 0 ? 0.7 : 0.1
+                color: isSelected ? '#000' : '#666',
+                fillOpacity: count > 0 ? 0.75 : (isSelected ? 0.3 : 0.1)
             };
         },
         onEachFeature: function(feature, layer) {
@@ -68,14 +72,8 @@ function renderMap(aggregated = {}) {
             const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
             const count = aggregated[cod] || 0;
             layer.bindPopup('<strong>' + nome + '</strong><br>IBGE: ' + cod + '<br>Focos/Casos: ' + count);
-            layer.bindTooltip(nome, {
-                permanent: true,
-                direction: 'center',
-                className: 'municipio-label',
-                opacity: 0.85
-            });
             layer.on('mouseover', function(e) {
-                e.target.setStyle({ weight: 4, color: '#000', fillOpacity: 0.9 });
+                e.target.setStyle({ weight: 3, color: '#000' });
             });
             layer.on('mouseout', function(e) {
                 geojsonLayer.resetStyle(e.target);
@@ -83,6 +81,14 @@ function renderMap(aggregated = {}) {
         }
     }).addTo(map);
     renderLegend();
+    if (selectedMunicipio) {
+        geojsonLayer.eachLayer(function(layer) {
+            const layerNome = layer.feature.properties.NM_MUN || layer.feature.properties.nome || layer.feature.properties.name || '';
+            if (layerNome === selectedMunicipio) {
+                map.fitBounds(layer.getBounds(), { padding: [50, 50] });
+            }
+        });
+    }
 }
 
 function renderLegend() {
@@ -90,18 +96,6 @@ function renderLegend() {
     legend.innerHTML = '<strong>Focos/Casos</strong><br>';
     colorScale.forEach(item => {
         legend.innerHTML += '<div class="legend-item"><div class="legend-color" style="background:' + item.color + '"></div><span>' + item.label + '</span></div>';
-    });
-}
-
-function searchMunicipio() {
-    const term = document.getElementById('searchMunicipio').value.toLowerCase().trim();
-    if (!term) return;
-    geojsonLayer.eachLayer(function(layer) {
-        const nome = (layer.feature.properties.NM_MUN || layer.feature.properties.nome || layer.feature.properties.name || '').toLowerCase();
-        if (nome.includes(term)) {
-            map.fitBounds(layer.getBounds(), { padding: [50, 50] });
-            layer.openPopup();
-        }
     });
 }
 

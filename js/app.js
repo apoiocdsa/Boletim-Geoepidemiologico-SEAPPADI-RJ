@@ -1,0 +1,78 @@
+let map, geojsonLayer, csvData = [], geojsonData = null, chartAgravo = null, chartTemporal = null;
+
+const colorScale = [
+    {min:0,max:0,color:'transparent',label:'Sem ocorrência'},
+    {min:1,max:2,color:'#fff3cd',label:'Muito baixa (1-2)'},
+    {min:3,max:5,color:'#ffc107',label:'Baixa (3-5)'},
+    {min:6,max:10,color:'#fd7e14',label:'Média (6-10)'},
+    {min:11,max:20,color:'#dc3545',label:'Alta (11-20)'},
+    {min:21,max:Infinity,color:'#8b0000',label:'Muito alta (>20)'}
+];
+
+function initMap() {
+    map = L.map('map', {center:[-22.0,-42.5], zoom:7});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution:'© OpenStreetMap | SEAPADI-RJ', maxZoom:18
+    }).addTo(map);
+}
+
+function getColor(count) {
+    if (!count || count === 0) return 'transparent';
+    for (let i = colorScale.length - 1; i >= 0; i--) {
+        if (count >= colorScale[i].min) return colorScale[i].color;
+    }
+    return 'transparent';
+}
+
+function loadGeoJSON() {
+    fetch('geojson/rj_municipios.geojson')
+        .then(r => r.json())
+        .then(data => { geojsonData = data; renderMap(); })
+        .catch(err => console.error('Erro GeoJSON:', err));
+}
+
+function loadCSV() {
+    Papa.parse('base_hub.csv', {
+        download: true, header: true, dynamicTyping: true, skipEmptyLines: true,
+        complete: function(results) { csvData = results.data; populateFilters(); applyFilters(); },
+        error: function(err) { console.error('Erro CSV:', err); }
+    });
+}
+
+function populateFilters() {
+    const agravos = [...new Set(csvData.map(r => r.agravo))].sort();
+    const anos = [...new Set(csvData.map(r => r.ano))].sort((a,b) => b-a);
+    const selAgravo = document.getElementById('filterAgravo');
+    agravos.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; selAgravo.appendChild(o); });
+    const selAno = document.getElementById('filterAno');
+    anos.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; selAno.appendChild(o); });
+}
+
+function renderMap(aggregated = {}) {
+    if (geojsonLayer) map.removeLayer(geojsonLayer);
+    geojsonLayer = L.geoJSON(geojsonData, {
+        style: function(feature) {
+            const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
+            const count = aggregated[cod] || 0;
+            return { fillColor: getColor(count), weight: 1, opacity: 1, color: '#666', fillOpacity: count > 0 ? 0.7 : 0 };
+        },
+        onEachFeature: function(feature, layer) {
+            const nome = feature.properties.NM_MUN || feature.properties.nome || feature.properties.name || 'Município';
+            const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
+            const count = aggregated[cod] || 0;
+            layer.bindPopup(`<strong>${nome}</strong><br>IBGE: ${cod}<br>Focos/Casos: ${count}`);
+        }
+    }).addTo(map);
+    renderLegend();
+}
+
+function renderLegend() {
+    const legend = document.getElementById('legend');
+    legend.innerHTML = '<strong>Focos/Casos</strong><br>';
+    colorScale.forEach(item => {
+        legend.innerHTML += `<div class="legend-item"><div class="legend-color" style="background:${item.color}"></div><span>${item.label}</span></div>`;
+    });
+}
+
+function init() { initMap(); loadGeoJSON(); loadCSV(); }
+document.addEventListener('DOMContentLoaded', init);

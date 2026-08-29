@@ -14,7 +14,7 @@ header h1{font-size:20px;margin-bottom:5px}
 .main-content{display:grid;grid-template-columns:1fr 380px;gap:15px}
 .map-container{position:relative;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,.1)}
 #map{height:600px;width:100%}
-.legend{position:absolute;bottom:20px;right:20px;background:#fff;padding:10px 15px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.2);z-index:1000;font-size:12px}
+.legend{position:absolute;bottom:30px;right:10px;background:rgba(255,255,255,.95);padding:8px 12px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.2);z-index:1000;font-size:11px;max-height:250px;overflow-y:auto}
 .legend-item{display:flex;align-items:center;gap:8px;margin-bottom:4px}
 .legend-color{width:16px;height:16px;border-radius:3px;border:1px solid #ccc}
 .dashboard{display:flex;flex-direction:column;gap:15px}

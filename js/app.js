@@ -14,6 +14,15 @@ function initMap() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution:'© OpenStreetMap | SEAPPADI-RJ', maxZoom:18
     }).addTo(map);
+
+    // Legenda como controle nativo do Leaflet — fica dentro do mapa
+    const legendControl = L.control({ position: 'bottomright' });
+    legendControl.onAdd = function() {
+        const div = L.DomUtil.create('div', 'legend');
+        div.id = 'legend';
+        return div;
+    };
+    legendControl.addTo(map);
 }
 
 function getColor(count) {
@@ -93,6 +102,7 @@ function renderMap(aggregated = {}, selectedMunicipio = null) {
 
 function renderLegend() {
     const legend = document.getElementById('legend');
+    if (!legend) return;
     legend.innerHTML = '<strong>Focos/Casos</strong><br>';
     colorScale.forEach(item => {
         legend.innerHTML += '<div class="legend-item"><div class="legend-color" style="background:' + item.color + '"></div><span>' + item.label + '</span></div>';

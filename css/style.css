@@ -7,10 +7,11 @@ header h1{font-size:20px;margin-bottom:5px}
 .filters{display:flex;gap:15px;align-items:flex-end;flex-wrap:wrap;background:#fff;padding:15px;border-radius:8px;margin-bottom:15px;box-shadow:0 2px 4px rgba(0,0,0,.1)}
 .filter-group{display:flex;flex-direction:column;gap:5px}
 .filter-group label{font-size:12px;font-weight:600;color:#555}
-.filter-group select{padding:6px 10px;border:1px solid #ccc;border-radius:4px;font-size:14px}
+.filter-group select,.filter-group input{padding:6px 10px;border:1px solid #ccc;border-radius:4px;font-size:14px}
 #btnApply,#btnReset{padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:14px;font-weight:600}
 #btnApply{background:#1a3a5c;color:#fff}
 #btnReset{background:#e0e0e0;color:#333}
+#btnSearch{padding:8px 16px;border:none;border-radius:4px;cursor:pointer;font-size:14px;font-weight:600;background:#28a745;color:#fff}
 .main-content{display:grid;grid-template-columns:1fr 380px;gap:15px}
 .map-container{position:relative;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,.1)}
 #map{height:600px;width:100%}
@@ -28,4 +29,5 @@ table{width:100%;border-collapse:collapse;font-size:13px}
 table th,table td{padding:6px 8px;text-align:left;border-bottom:1px solid #eee}
 table th{font-weight:600;color:#555;font-size:12px}
 footer{text-align:center;padding:15px;font-size:12px;color:#777}
+.municipio-label{background:rgba(255,255,255,.8);border:none;border-radius:3px;padding:1px 4px;font-size:10px;font-weight:600;color:#333;box-shadow:0 1px 3px rgba(0,0,0,.3);text-shadow:0 0 2px #fff}
 @media(max-width:900px){.main-content{grid-template-columns:1fr}#map{height:400px}.cards{grid-template-columns:1fr}}

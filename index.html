@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boletim Geoepidemiológico — SEAPADI-RJ</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+    <header>
+        <h1>Boletim Geoepidemiológico — Defesa Agropecuária SEAPADI-RJ</h1>
+        <p class="subtitle">Monitoramento de Agravos à Sanidade Animal no Estado do Rio de Janeiro</p>
+    </header>
+    <div class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <label for="filterAgravo">Agravo:</label>
+                <select id="filterAgravo"><option value="todos">Todos</option></select>
+            </div>
+            <div class="filter-group">
+                <label for="filterAno">Ano:</label>
+                <select id="filterAno"><option value="todos">Série Histórica</option></select>
+            </div>
+            <div class="filter-group">
+                <label for="filterMes">Mês:</label>
+                <select id="filterMes">
+                    <option value="0">Acumulado Anual</option>
+                    <option value="1">Janeiro</option><option value="2">Fevereiro</option>
+                    <option value="3">Março</option><option value="4">Abril</option>
+                    <option value="5">Maio</option><option value="6">Junho</option>
+                    <option value="7">Julho</option><option value="8">Agosto</option>
+                    <option value="9">Setembro</option><option value="10">Outubro</option>
+                    <option value="11">Novembro</option><option value="12">Dezembro</option>
+                </select>
+            </div>
+            <button id="btnApply" onclick="applyFilters()">Aplicar</button>
+            <button id="btnReset" onclick="resetFilters()">Limpar</button>
+        </div>
+        <div class="main-content">
+            <div class="map-container">
+                <div id="map"></div>
+                <div class="legend" id="legend"></div>
+            </div>
+            <div class="dashboard">
+                <div class="cards">
+                    <div class="card"><span class="card-label">Total de Focos</span><span class="card-value" id="totalFocos">0</span></div>
+                    <div class="card"><span class="card-label">Municípios</span><span class="card-value" id="totalMunicipios">0</span></div>
+                    <div class="card"><span class="card-label">Agravos</span><span class="card-value" id="totalAgravos">0</span></div>
+                </div>
+                <div class="chart-container"><h3>Distribuição por Agravo</h3><canvas id="chartAgravo"></canvas></div>
+                <div class="chart-container"><h3>Evolução Temporal</h3><canvas id="chartTemporal"></canvas></div>
+                <div class="table-container"><h3>Top 10 Municípios</h3><table id="topMunicipios"><thead><tr><th>#</th><th>Município</th><th>Focos/Casos</th></tr></thead><tbody></tbody></table></div>
+            </div>
+        </div>
+    </div>
+    <footer><p>SEAPADI-RJ — Defesa Agropecuária | Dados sanitizados sem identificação de propriedades</p></footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

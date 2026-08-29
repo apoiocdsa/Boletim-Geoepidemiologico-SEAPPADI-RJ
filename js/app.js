@@ -54,13 +54,32 @@ function renderMap(aggregated = {}) {
         style: function(feature) {
             const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
             const count = aggregated[cod] || 0;
-            return { fillColor: getColor(count), weight: 1, opacity: 1, color: '#666', fillOpacity: count > 0 ? 0.7 : 0 };
+            return {
+                fillColor: getColor(count),
+                weight: 2,
+                opacity: 1,
+                color: '#333',
+                dashArray: '',
+                fillOpacity: count > 0 ? 0.7 : 0.1
+            };
         },
         onEachFeature: function(feature, layer) {
             const nome = feature.properties.NM_MUN || feature.properties.nome || feature.properties.name || 'Município';
             const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
             const count = aggregated[cod] || 0;
-            layer.bindPopup(`<strong>${nome}</strong><br>IBGE: ${cod}<br>Focos/Casos: ${count}`);
+            layer.bindPopup('<strong>' + nome + '</strong><br>IBGE: ' + cod + '<br>Focos/Casos: ' + count);
+            layer.bindTooltip(nome, {
+                permanent: true,
+                direction: 'center',
+                className: 'municipio-label',
+                opacity: 0.85
+            });
+            layer.on('mouseover', function(e) {
+                e.target.setStyle({ weight: 4, color: '#000', fillOpacity: 0.9 });
+            });
+            layer.on('mouseout', function(e) {
+                geojsonLayer.resetStyle(e.target);
+            });
         }
     }).addTo(map);
     renderLegend();
@@ -70,7 +89,19 @@ function renderLegend() {
     const legend = document.getElementById('legend');
     legend.innerHTML = '<strong>Focos/Casos</strong><br>';
     colorScale.forEach(item => {
-        legend.innerHTML += `<div class="legend-item"><div class="legend-color" style="background:${item.color}"></div><span>${item.label}</span></div>`;
+        legend.innerHTML += '<div class="legend-item"><div class="legend-color" style="background:' + item.color + '"></div><span>' + item.label + '</span></div>';
+    });
+}
+
+function searchMunicipio() {
+    const term = document.getElementById('searchMunicipio').value.toLowerCase().trim();
+    if (!term) return;
+    geojsonLayer.eachLayer(function(layer) {
+        const nome = (layer.feature.properties.NM_MUN || layer.feature.properties.nome || layer.feature.properties.name || '').toLowerCase();
+        if (nome.includes(term)) {
+            map.fitBounds(layer.getBounds(), { padding: [50, 50] });
+            layer.openPopup();
+        }
     });
 }
 

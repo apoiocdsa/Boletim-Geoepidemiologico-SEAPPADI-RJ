@@ -15,7 +15,6 @@ function initMap() {
         attribution:'© OpenStreetMap | SEAPPADI-RJ', maxZoom:18
     }).addTo(map);
 
-    // Legenda como controle nativo do Leaflet — fica dentro do mapa
     const legendControl = L.control({ position: 'bottomright' });
     legendControl.onAdd = function() {
         const div = L.DomUtil.create('div', 'legend');
@@ -58,6 +57,9 @@ function populateFilters() {
     const selMun = document.getElementById('filterMunicipio');
     const municipios = [...new Set(csvData.map(r => r.municipio))].sort();
     municipios.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; selMun.appendChild(o); });
+    const selNucleo = document.getElementById('filterNucleo');
+    const nucleos = [...new Set(csvData.map(r => r.nucleo))].sort();
+    nucleos.forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = n; selNucleo.appendChild(o); });
 }
 
 function renderMap(aggregated = {}, selectedMunicipio = null) {

@@ -32,6 +32,15 @@ function getColor(count) {
     return 'transparent';
 }
 
+// Encontra a coluna de núcleo aceitando qualquer nome (Núcleo, Nucleo, NUCLEO, etc.)
+function findNucleoColumn(row) {
+    for (const key of Object.keys(row)) {
+        const norm = key.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        if (norm.includes('nucleo')) return row[key];
+    }
+    return '';
+}
+
 function loadGeoJSON() {
     fetch('geojson/rj_municipios.geojson')
         .then(r => r.json())
@@ -42,7 +51,14 @@ function loadGeoJSON() {
 function loadCSV() {
     Papa.parse('base_hub.csv', {
         download: true, header: true, dynamicTyping: true, skipEmptyLines: true,
-        complete: function(results) { csvData = results.data; populateFilters(); applyFilters(); },
+        complete: function(results) {
+            csvData = results.data.map(function(row) {
+                row.nucleo = findNucleoColumn(row);
+                return row;
+            });
+            populateFilters();
+            applyFilters();
+        },
         error: function(err) { console.error('Erro CSV:', err); }
     });
 }
@@ -58,7 +74,7 @@ function populateFilters() {
     const municipios = [...new Set(csvData.map(r => r.municipio))].sort();
     municipios.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; selMun.appendChild(o); });
     const selNucleo = document.getElementById('filterNucleo');
-    const nucleos = [...new Set(csvData.map(r => r.nucleo))].sort();
+    const nucleos = [...new Set(csvData.map(r => r.nucleo))].filter(Boolean).sort();
     nucleos.forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = n; selNucleo.appendChild(o); });
 }
 

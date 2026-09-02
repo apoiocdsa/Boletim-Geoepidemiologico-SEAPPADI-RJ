@@ -32,7 +32,6 @@ function getColor(count) {
     return 'transparent';
 }
 
-// Encontra a coluna de núcleo aceitando qualquer nome (Núcleo, Nucleo, NUCLEO, etc.)
 function findNucleoColumn(row) {
     for (const key of Object.keys(row)) {
         const norm = key.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -78,9 +77,27 @@ function populateFilters() {
     nucleos.forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = n; selNucleo.appendChild(o); });
 }
 
-function renderMap(aggregated = {}, selectedMunicipio = null) {
+function renderMap(aggregated = {}, selectedMunicipio = null, selectedNucleo = null) {
     if (geojsonLayer) map.removeLayer(geojsonLayer);
+
+    // Conjunto de códigos IBGE dos municípios que pertencem ao núcleo selecionado
+    let nucleoCodes = null;
+    if (selectedNucleo) {
+        nucleoCodes = new Set();
+        csvData.forEach(function(row) {
+            if (row.nucleo === selectedNucleo) {
+                nucleoCodes.add(String(row.cod_ibge));
+            }
+        });
+    }
+
     geojsonLayer = L.geoJSON(geojsonData, {
+        // FILTRO ESPACIAL: esconde os municípios que não são do núcleo selecionado
+        filter: function(feature) {
+            if (!nucleoCodes) return true;
+            const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
+            return nucleoCodes.has(cod);
+        },
         style: function(feature) {
             const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
             const nome = feature.properties.NM_MUN || feature.properties.nome || feature.properties.name || '';
@@ -107,8 +124,19 @@ function renderMap(aggregated = {}, selectedMunicipio = null) {
             });
         }
     }).addTo(map);
+
     renderLegend();
-    if (selectedMunicipio) {
+
+    // Zoom automático para o núcleo ou município selecionado
+    if (selectedNucleo && nucleoCodes) {
+        const bounds = L.latLngBounds([]);
+        geojsonLayer.eachLayer(function(layer) {
+            bounds.extend(layer.getBounds());
+        });
+        if (bounds.isValid()) {
+            map.fitBounds(bounds, { padding: [40, 40] });
+        }
+    } else if (selectedMunicipio) {
         geojsonLayer.eachLayer(function(layer) {
             const layerNome = layer.feature.properties.NM_MUN || layer.feature.properties.nome || layer.feature.properties.name || '';
             if (layerNome === selectedMunicipio) {

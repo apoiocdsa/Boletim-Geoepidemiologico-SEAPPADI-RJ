@@ -43,7 +43,11 @@ function findNucleoColumn(row) {
 function loadGeoJSON() {
     fetch('geojson/rj_municipios.geojson')
         .then(r => r.json())
-        .then(data => { geojsonData = data; renderMap(); })
+        .then(data => {
+            geojsonData = data;
+            populateMunicipios();
+            renderMap();
+        })
         .catch(err => console.error('Erro GeoJSON:', err));
 }
 
@@ -62,6 +66,25 @@ function loadCSV() {
     });
 }
 
+// Preenche o dropdown de municípios com TODOS os 92 municípios do GeoJSON
+function populateMunicipios() {
+    const selMun = document.getElementById('filterMunicipio');
+    if (!selMun || !geojsonData) return;
+    selMun.innerHTML = '<option value="">Todos</option>';
+    const nomes = [];
+    geojsonData.features.forEach(function(f) {
+        const nome = f.properties.NM_MUN || f.properties.nome || f.properties.name || '';
+        if (nome && !nomes.includes(nome)) nomes.push(nome);
+    });
+    nomes.sort(function(a, b) { return a.localeCompare(b, 'pt-BR'); });
+    nomes.forEach(function(n) {
+        const o = document.createElement('option');
+        o.value = n;
+        o.textContent = n;
+        selMun.appendChild(o);
+    });
+}
+
 function populateFilters() {
     const agravos = [...new Set(csvData.map(r => r.agravo))].sort();
     const anos = [...new Set(csvData.map(r => r.ano))].sort((a,b) => b-a);
@@ -69,18 +92,16 @@ function populateFilters() {
     agravos.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; selAgravo.appendChild(o); });
     const selAno = document.getElementById('filterAno');
     anos.forEach(a => { const o = document.createElement('option'); o.value = a; o.textContent = a; selAno.appendChild(o); });
-    const selMun = document.getElementById('filterMunicipio');
-    const municipios = [...new Set(csvData.map(r => r.municipio))].sort();
-    municipios.forEach(m => { const o = document.createElement('option'); o.value = m; o.textContent = m; selMun.appendChild(o); });
     const selNucleo = document.getElementById('filterNucleo');
     const nucleos = [...new Set(csvData.map(r => r.nucleo))].filter(Boolean).sort();
     nucleos.forEach(n => { const o = document.createElement('option'); o.value = n; o.textContent = n; selNucleo.appendChild(o); });
+    // Se o GeoJSON ainda não carregou, usa o CSV como fallback
+    if (!geojsonData) populateMunicipios();
 }
 
 function renderMap(aggregated = {}, selectedMunicipio = null, selectedNucleo = null) {
     if (geojsonLayer) map.removeLayer(geojsonLayer);
 
-    // Conjunto de códigos IBGE dos municípios que pertencem ao núcleo selecionado
     let nucleoCodes = null;
     if (selectedNucleo) {
         nucleoCodes = new Set();
@@ -92,7 +113,6 @@ function renderMap(aggregated = {}, selectedMunicipio = null, selectedNucleo = n
     }
 
     geojsonLayer = L.geoJSON(geojsonData, {
-        // FILTRO ESPACIAL: esconde os municípios que não são do núcleo selecionado
         filter: function(feature) {
             if (!nucleoCodes) return true;
             const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
@@ -127,7 +147,6 @@ function renderMap(aggregated = {}, selectedMunicipio = null, selectedNucleo = n
 
     renderLegend();
 
-    // Zoom automático para o núcleo ou município selecionado
     if (selectedNucleo && nucleoCodes) {
         const bounds = L.latLngBounds([]);
         geojsonLayer.eachLayer(function(layer) {

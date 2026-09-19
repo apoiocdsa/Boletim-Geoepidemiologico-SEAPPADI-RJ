@@ -10,6 +10,11 @@ const colorScale = [
     {min:21,max:Infinity,color:'#8b0000',label:'Muito alta (>20)'}
 ];
 
+// Normaliza acentos, maiúsculas e espaços para comparação robusta
+function normalize(str) {
+    return String(str || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+}
+
 function initMap() {
     map = L.map('map', {center:[-22.0,-42.5], zoom:7, zoomControl:true});
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -107,7 +112,9 @@ function populateNucleos() {
     const selNucleo = document.getElementById('filterNucleo');
     if (!selNucleo) return;
     selNucleo.innerHTML = '<option value="">Todos</option>';
-    const nucleos = [...new Set(Object.values(nucleoMap))].filter(Boolean).sort();
+    const nucleos = [...new Set(Object.values(nucleoMap))].filter(Boolean).sort(function(a, b) {
+        return a.localeCompare(b, 'pt-BR');
+    });
     nucleos.forEach(function(n) {
         const o = document.createElement('option');
         o.value = n;
@@ -133,16 +140,17 @@ function renderMap(aggregated = {}, selectedMunicipio = null, selectedNucleo = n
 
     let nucleoCodes = null;
     if (selectedNucleo) {
+        const selNorm = normalize(selectedNucleo);
         nucleoCodes = new Set();
         if (Object.keys(nucleoMap).length > 0) {
-            // Usa a referência completa (todos os municípios do núcleo, mesmo sem ocorrência)
+            // Usa a referência completa, comparando com acentos normalizados
             Object.keys(nucleoMap).forEach(function(cod) {
-                if (nucleoMap[cod] === selectedNucleo) nucleoCodes.add(cod);
+                if (normalize(nucleoMap[cod]) === selNorm) nucleoCodes.add(cod);
             });
         } else {
-            // Fallback: usa o CSV (comportamento antigo)
+            // Fallback: usa o CSV, comparando com acentos normalizados
             csvData.forEach(function(row) {
-                if (row.nucleo === selectedNucleo) nucleoCodes.add(String(row.cod_ibge));
+                if (normalize(row.nucleo) === selNorm) nucleoCodes.add(String(row.cod_ibge));
             });
         }
     }
@@ -157,7 +165,7 @@ function renderMap(aggregated = {}, selectedMunicipio = null, selectedNucleo = n
             const cod = String(feature.properties.CD_MUN || feature.properties.cod_ibge || feature.properties.id || '');
             const nome = feature.properties.NM_MUN || feature.properties.nome || feature.properties.name || '';
             const count = aggregated[cod] || 0;
-            const isSelected = selectedMunicipio && nome === selectedMunicipio;
+            const isSelected = selectedMunicipio && normalize(nome) === normalize(selectedMunicipio);
             return {
                 fillColor: getColor(count),
                 weight: isSelected ? 4 : 2,
@@ -193,7 +201,7 @@ function renderMap(aggregated = {}, selectedMunicipio = null, selectedNucleo = n
     } else if (selectedMunicipio) {
         geojsonLayer.eachLayer(function(layer) {
             const layerNome = layer.feature.properties.NM_MUN || layer.feature.properties.nome || layer.feature.properties.name || '';
-            if (layerNome === selectedMunicipio) {
+            if (normalize(layerNome) === normalize(selectedMunicipio)) {
                 map.fitBounds(layer.getBounds(), { padding: [50, 50] });
             }
         });

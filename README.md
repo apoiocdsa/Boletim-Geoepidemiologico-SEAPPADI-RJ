@@ -20,7 +20,7 @@ Este repositório funciona como material de **consulta complementar** ao boletim
 | IAAP | Influenza Aviária Alta Patogenicidade | Lab. oficial (MAPA) | caso |
 | Raiva | Raiva | Lab. oficial (PESAGRO) | caso |
 | Aethina tumida | Aethina tumida (pequeno besouro das colmeias) | Lab. oficial (MAPA) | foco |
-| Cria Pútrida Europeia | Cria Pútrida Europeia | Lab. oficial (MAPA) | foco |
+| Cria Putrida Europeia | Cria Putrida Europeia | Lab. oficial (MAPA) | foco |
 | Brucelose | Brucelose | SISBRAVET | foco |
 | Tuberculose (propriedade) | Tuberculose em propriedades | SISBRAVET | foco |
 | Tuberculose (abate) | Tuberculose (achados de matança) | SIAPEC | foco |

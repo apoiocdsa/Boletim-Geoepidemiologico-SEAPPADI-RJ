@@ -396,7 +396,7 @@ ano;mes;cod_ibge;municipio;agravo;fonte;situacao;quantidade;Nucleo de Defesa
 2023;12;3305505;Saquarema;AIE;Lab. credenciado;caso;1;ARARUAMA
 2023;12;3304524;Rio das Ostras;Aethina tumida;Lab. oficial (MAPA);caso;1;CASIMIRO DE ABREU
 2023;12;3304607;Santa Maria Madalena;Aethina tumida;Lab. oficial (MAPA);caso;1;SANTA MARIA MADALENA
-2023;12;3304524;Rio das Ostras;Cria Pútrida Europeia;Lab. oficial (MAPA);foco;1;CASIMIRO DE ABREU
+2023;12;3304524;Rio das Ostras;Cria Putrida Europeia;Lab. oficial (MAPA);foco;1;CASIMIRO DE ABREU
 2023;12;3300605;Bom Jesus do Itabapoana;Tuberculose (abate);SIAPEC;foco;1;BOM JESUS DO ITABAPOANA
 2023;12;3300936;Carapebus;Tuberculose (abate);SIAPEC;foco;1;MACAÉ
 2023;12;3301157;Cardoso Moreira;Tuberculose (abate);SIAPEC;foco;2;SÃO FIDELIS
@@ -435,7 +435,7 @@ ano;mes;cod_ibge;municipio;agravo;fonte;situacao;quantidade;Nucleo de Defesa
 2024;2;3304755;São Francisco de Itabapoana;IAAP;Lab. oficial (MAPA);caso;1;SÃO FRANCISCO DO ITABAPOANA
 2024;2;3305000;São João da Barra;IAAP;Lab. oficial (MAPA);caso;1;CAMPOS DOS GOYTACAZES
 2024;2;3303708;Paraíba do Sul;Aethina tumida;Lab. oficial (MAPA);caso;1;TRÊS RIOS
-2024;2;3303708;Paraíba do Sul;Cria Pútrida Europeia;Lab. oficial (MAPA);foco;1;TRÊS RIOS
+2024;2;3303708;Paraíba do Sul;Cria Putrida Europeia;Lab. oficial (MAPA);foco;1;TRÊS RIOS
 2024;2;3300605;Bom Jesus do Itabapoana;Tuberculose (abate);SIAPEC;foco;4;BOM JESUS DO ITABAPOANA
 2024;2;3301207;Carmo;Tuberculose (abate);SIAPEC;foco;1;CORDEIRO
 2024;2;3302205;Itaperuna;Tuberculose (abate);SIAPEC;foco;1;ITAPERUNA

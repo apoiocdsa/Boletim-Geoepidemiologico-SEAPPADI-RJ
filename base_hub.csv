@@ -396,7 +396,7 @@ ano;mes;cod_ibge;municipio;agravo;fonte;situacao;quantidade;Nucleo de Defesa
 2023;12;3305505;Saquarema;AIE;Lab. credenciado;caso;1;ARARUAMA
 2023;12;3304524;Rio das Ostras;Aethina tumida;Lab. oficial (MAPA);caso;1;CASIMIRO DE ABREU
 2023;12;3304607;Santa Maria Madalena;Aethina tumida;Lab. oficial (MAPA);caso;1;SANTA MARIA MADALENA
-2023;12;3304524;Rio das Ostras;Cria Putrida Europeia;Lab. oficial (MAPA);foco;1;CASIMIRO DE ABREU
+2023;12;3304524;Rio das Ostras;Cria Pútrida Europeia;Lab. oficial (MAPA);foco;1;CASIMIRO DE ABREU
 2023;12;3300605;Bom Jesus do Itabapoana;Tuberculose (abate);SIAPEC;foco;1;BOM JESUS DO ITABAPOANA
 2023;12;3300936;Carapebus;Tuberculose (abate);SIAPEC;foco;1;MACAÉ
 2023;12;3301157;Cardoso Moreira;Tuberculose (abate);SIAPEC;foco;2;SÃO FIDELIS
@@ -435,7 +435,7 @@ ano;mes;cod_ibge;municipio;agravo;fonte;situacao;quantidade;Nucleo de Defesa
 2024;2;3304755;São Francisco de Itabapoana;IAAP;Lab. oficial (MAPA);caso;1;SÃO FRANCISCO DO ITABAPOANA
 2024;2;3305000;São João da Barra;IAAP;Lab. oficial (MAPA);caso;1;CAMPOS DOS GOYTACAZES
 2024;2;3303708;Paraíba do Sul;Aethina tumida;Lab. oficial (MAPA);caso;1;TRÊS RIOS
-2024;2;3303708;Paraíba do Sul;Cria Putrida Europeia;Lab. oficial (MAPA);foco;1;TRÊS RIOS
+2024;2;3303708;Paraíba do Sul;Cria Pútrida Europeia;Lab. oficial (MAPA);foco;1;TRÊS RIOS
 2024;2;3300605;Bom Jesus do Itabapoana;Tuberculose (abate);SIAPEC;foco;4;BOM JESUS DO ITABAPOANA
 2024;2;3301207;Carmo;Tuberculose (abate);SIAPEC;foco;1;CORDEIRO
 2024;2;3302205;Itaperuna;Tuberculose (abate);SIAPEC;foco;1;ITAPERUNA
@@ -1041,31 +1041,55 @@ ano;mes;cod_ibge;municipio;agravo;fonte;situacao;quantidade;Nucleo de Defesa
 2026;8;3301009;Campos dos Goytacazes;Raiva;Lab. oficial (PESAGRO);caso;1;CAMPOS DOS GOYTACAZES
 2026;8;3300803;Cachoeiras de Macacu;Raiva;Lab. oficial (PESAGRO);caso;1;TANGUÁ
 2026;8;3304508;Rio das Flores;Brucelose;SISBRAVET;foco;1;VALENÇA
-2026;9;3300100;Angra dos Reis;AIE;Lab. credenciado;caso;1;ANGRA DOS REIS
-2026;9;3300159;Aperibé;AIE;Lab. credenciado;caso;;ITAOCARA
-2026;9;3300209;Araruama;AIE;Lab. credenciado;caso;;ARARUAMA
-2026;9;3302007;Itaguaí;AIE;Lab. credenciado;caso;;ANGRA DOS REIS
-2026;9;3302502;Magé;AIE;Lab. credenciado;caso;;NITEROI
-2026;9;3304557;Rio de Janeiro;AIE;Lab. credenciado;caso;;RIO DE JANEIRO
-2026;9;3304904;São Gonçalo;AIE;Lab. credenciado;caso;;NITEROI
-2026;9;3305554;Seropédica;AIE;Lab. credenciado;caso;;RIO DE JANEIRO
-2026;9;3305802;Teresópolis;AIE;Lab. credenciado;caso;;NOVA FRIBURGO
-2026;9;3300605;Bom Jesus do Itabapoana;Cisticercose;SIAPEC;foco;;BOM JESUS DO ITABAPOANA
-2026;9;3302205;Itaperuna;Cisticercose;SIAPEC;foco;;ITAPERUNA
-2026;9;3303005;Miracema;Cisticercose;SIAPEC;foco;;SANTO ANTÔNIO DE PÁDUA
-2026;9;3303708;Paraíba do Sul;Cisticercose;SIAPEC;foco;;TRÊS RIOS
-2026;9;3305406;Sapucaia;Cisticercose;SIAPEC;foco;;TRÊS RIOS
-2026;9;3300605;Bom Jesus do Itabapoana;Tuberculose (abate);SIAPEC;foco;;BOM JESUS DO ITABAPOANA
-2026;9;3301009;Campos dos Goytacazes;Tuberculose (abate);SIAPEC;foco;;CAMPOS DOS GOYTACAZES
-2026;9;3301405;Conceição de Macabu;Tuberculose (abate);SIAPEC;foco;;MACAÉ
-2026;9;3302205;Itaperuna;Tuberculose (abate);SIAPEC;foco;;ITAPERUNA
-2026;9;3303005;Miracema;Tuberculose (abate);SIAPEC;foco;;SANTO ANTÔNIO DE PÁDUA
-2026;9;3303104;Natividade;Tuberculose (abate);SIAPEC;foco;;NATIVIDADE
-2026;9;3304706;Santo Antônio de Pádua;Tuberculose (abate);SIAPEC;foco;;SANTO ANTÔNIO DE PÁDUA
-2026;9;3304805;São Fidélis;Tuberculose (abate);SIAPEC;foco;;SÃO FIDELIS
-2026;9;3304755;São Francisco de Itabapoana;Tuberculose (abate);SIAPEC;foco;;SÃO FRANCISCO DO ITABAPOANA
-2026;9;3300902;Cambuci;Aethina tumida;Lab. oficial (MAPA);caso;;ITAOCARA
-2026;9;3304805;São Fidélis;Aethina tumida;Lab. oficial (MAPA);caso;;SÃO FIDELIS
-2026;9;3305703;Sumidouro;Aethina tumida;Lab. oficial (MAPA);caso;;NOVA FRIBURGO
-2026;9;3306107;Valença;Aethina tumida;Lab. oficial (MAPA);caso;;VALENÇA
-2026;9;3300407;Barra Mansa;Raiva;Lab. oficial (PESAGRO);caso;;BARRA MANSA
+2026;9;3300100;Angra dos Reis;AIE;Lab. credenciado;caso;2;ANGRA DOS REIS
+2026;9;3300159;Aperibé;AIE;Lab. credenciado;caso;1;ITAOCARA
+2026;9;3300209;Araruama;AIE;Lab. credenciado;caso;1;ARARUAMA
+2026;9;3305554;Seropédica;AIE;Lab. credenciado;caso;1;RIO DE JANEIRO
+2026;9;3302502;Magé;AIE;Lab. credenciado;caso;1;NITEROI
+2026;9;3304557;Rio de Janeiro;AIE;Lab. credenciado;caso;3;RIO DE JANEIRO
+2026;9;3304904;São Gonçalo;AIE;Lab. credenciado;caso;1;NITEROI
+2026;9;3305554;Seropédica;AIE;Lab. credenciado;caso;4;RIO DE JANEIRO
+2026;9;3305802;Teresópolis;AIE;Lab. credenciado;caso;1;NOVA FRIBURGO
+2026;9;3300605;Bom Jesus do Itabapoana;Cisticercose;SIAPEC;foco;1;BOM JESUS DO ITABAPOANA
+2026;9;3302205;Itaperuna;Cisticercose;SIAPEC;foco;1;ITAPERUNA
+2026;9;3303005;Miracema;Cisticercose;SIAPEC;foco;1;SANTO ANTÔNIO DE PÁDUA
+2026;9;3303708;Paraíba do Sul;Cisticercose;SIAPEC;foco;1;TRÊS RIOS
+2026;9;3305406;Sapucaia;Cisticercose;SIAPEC;foco;2;TRÊS RIOS
+2026;9;3300605;Bom Jesus do Itabapoana;Tuberculose (abate);SIAPEC;foco;1;BOM JESUS DO ITABAPOANA
+2026;9;3301009;Campos dos Goytacazes;Tuberculose (abate);SIAPEC;foco;4;CAMPOS DOS GOYTACAZES
+2026;9;3301405;Conceição de Macabu;Tuberculose (abate);SIAPEC;foco;1;MACAÉ
+2026;9;3302205;Itaperuna;Tuberculose (abate);SIAPEC;foco;5;ITAPERUNA
+2026;9;3303005;Miracema;Tuberculose (abate);SIAPEC;foco;2;SANTO ANTÔNIO DE PÁDUA
+2026;9;3303104;Natividade;Tuberculose (abate);SIAPEC;foco;1;NATIVIDADE
+2026;9;3304706;Santo Antônio de Pádua;Tuberculose (abate);SIAPEC;foco;1;SANTO ANTÔNIO DE PÁDUA
+2026;9;3304805;São Fidélis;Tuberculose (abate);SIAPEC;foco;1;SÃO FIDELIS
+2026;9;3304755;São Francisco de Itabapoana;Tuberculose (abate);SIAPEC;foco;2;SÃO FRANCISCO DO ITABAPOANA
+2026;9;3300902;Cambuci;Aethina tumida;Lab. oficial (MAPA);caso;1;ITAOCARA
+2026;9;3304805;São Fidélis;Aethina tumida;Lab. oficial (MAPA);caso;1;SÃO FIDELIS
+2026;9;3305703;Sumidouro;Aethina tumida;Lab. oficial (MAPA);caso;1;NOVA FRIBURGO
+2026;9;3306107;Valença;Aethina tumida;Lab. oficial (MAPA);caso;1;VALENÇA
+2026;9;3300407;Barra Mansa;Raiva;Lab. oficial (PESAGRO);caso;1;BARRA MANSA
+2026;10;3301108;Cantagalo;AIE;Lab. credenciado;caso;1;CORDEIRO
+2026;10;3303609;Paracambi;AIE;Lab. credenciado;caso;1;RIO DE JANEIRO
+2026;10;3305554;Seropédica;AIE;Lab. credenciado;caso;1;RIO DE JANEIRO
+2026;10;3303104;Natividade;Cisticercose;SIAPEC;foco;1;NATIVIDADE
+2026;10;3303906;Petrópolis;Cisticercose;SIAPEC;foco;1;PETRÓPOLIS
+2026;10;3305307;São Sebastião do Alto;Cisticercose;SIAPEC;foco;1;CORDEIRO
+2026;10;3305406;Sapucaia;Cisticercose;SIAPEC;foco;5;TRÊS RIOS
+2026;10;3305604;Silva Jardim;Cisticercose;SIAPEC;foco;2;TANGUÁ
+2026;10;3306008;Três Rios;Cisticercose;SIAPEC;foco;1;TRÊS RIOS
+2026;10;3306107;Valença;Cisticercose;SIAPEC;foco;1;VALENÇA
+2026;10;3300605;Bom Jesus do Itabapoana;Tuberculose (abate);SIAPEC;foco;4;BOM JESUS DO ITABAPOANA
+2026;10;3300902;Cambuci;Tuberculose (abate);SIAPEC;foco;2;ITAOCARA
+2026;10;3301009;Campos dos Goytacazes;Tuberculose (abate);SIAPEC;foco;3;CAMPOS DOS GOYTACAZES
+2026;10;3301306;Casimiro de Abreu;Tuberculose (abate);SIAPEC;foco;1;CASIMIRO DE ABREU
+2026;10;3303005;Miracema;Tuberculose (abate);SIAPEC;foco;1;SANTO ANTÔNIO DE PÁDUA
+2026;10;3303104;Natividade;Tuberculose (abate);SIAPEC;foco;1;NATIVIDADE
+2026;10;3304102;Porciúncula;Tuberculose (abate);SIAPEC;foco;1;NATIVIDADE
+2026;10;3304706;Santo Antônio de Pádua;Tuberculose (abate);SIAPEC;foco;5;SANTO ANTÔNIO DE PÁDUA
+2026;10;3304805;São Fidélis;Tuberculose (abate);SIAPEC;foco;2;SÃO FIDELIS
+2026;10;3305604;Silva Jardim;Tuberculose (abate);SIAPEC;foco;1;TANGUÁ
+2026;10;3305703;Sumidouro;Tuberculose (abate);SIAPEC;foco;1;NOVA FRIBURGO
+2026;10;3306206;Vassouras;Tuberculose (propriedade);SISBRAVET;foco;1;VASSOURAS
+2026;10;3306206;Vassouras;Brucelose;SISBRAVET;foco;1;VASSOURAS
+2026;10;3301603;Duas Barras;Aethina tumida;Lab. oficial (MAPA);caso;1;CORDEIRO
